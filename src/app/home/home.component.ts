@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { baseAPI_URL } from '../../helpers/helpers';
 import { FormsModule } from '@angular/forms';
 import _ from 'lodash';
+import { UtilsService } from '../utils/utils.service';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit {
   ];
 
   http = inject(HttpClient);
+  utilsService = inject(UtilsService);
 
   ngOnInit(): void {
     this.getAllCotations();
@@ -55,18 +57,10 @@ export class HomeComponent implements OnInit {
   }
 
   formatNumber = (value: number): string => {
-    return `R$ ${value.toFixed(2).replace('.', ',')}`;
+    return this.utilsService.formatNumber(value);
   };
 
   formatDateString(dateString: string): string {
-    const date = new Date(dateString);
-
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = String(date.getFullYear()).slice(-2);
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-
-    return `${day}/${month}/${year} ${hours}:${minutes}`;
+    return this.utilsService.formatDateString(dateString);
   }
 }

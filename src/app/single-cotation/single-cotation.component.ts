@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ICotations } from '../../interfaces/global.interfaces';
 import { baseAPI_URL } from '../../helpers/helpers';
+import { UtilsService } from '../utils/utils.service';
 
 @Component({
   selector: 'app-single-cotation',
@@ -18,6 +19,7 @@ export class SingleCotationComponent implements OnInit {
 
   route = inject(ActivatedRoute);
   http = inject(HttpClient);
+  utilsService = inject(UtilsService);
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -41,19 +43,10 @@ export class SingleCotationComponent implements OnInit {
   }
 
   formatNumber = (value: number): string => {
-    if (!value) return 'R$ 0,00';
-    return `R$ ${value.toFixed(2).replace('.', ',')}`;
+    return this.utilsService.formatNumber(value);
   };
 
   formatDateString(dateString: string): string {
-    const date = new Date(dateString);
-
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = String(date.getFullYear()).slice(-2);
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-
-    return `${day}/${month}/${year} ${hours}:${minutes}`;
+    return this.utilsService.formatDateString(dateString);
   }
 }
