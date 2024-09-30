@@ -1,0 +1,54 @@
+<h1 class="text-center mt-10 text-2xl font-semibold">Cotações</h1>
+
+<div class="mt-5 mx-8">
+  @if (!cotationsData) {
+  <p>Carregando...</p>
+  } @else {
+  <div class="flex justify-center items-center gap-4 my-2">
+    <input
+      type="text"
+      class="border border-black px-2 rounded-md"
+      [(ngModel)]="inputValue"
+      (input)="handleFilterCard()"
+      placeholder="Buscar..."
+    />
+    <select
+      name="orderBy"
+      id="orderBy"
+      class="border border-black rounded-md px-4 py-1"
+      [(ngModel)]="selectValue"
+      (change)="handleOrderList()"
+    >
+      @for (filter of filterOption; track $index) {
+      <option value="{{ filter.field }}">{{ filter.label }}</option>
+      }
+    </select>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+    @for (data of cotationsData; track $index) {
+    <a
+      [routerLink]="[data.moneda.toLowerCase()]"
+      class="border border-black rounded-lg p-2"
+    >
+      <h2 class="text-lg font-semibold">{{ data.nombre }}</h2>
+      <div class="text-sm text-gray-600">
+        <p>
+          Compra:
+          <span class="font-semibold">{{ formatNumber(data.compra) }}</span>
+        </p>
+        <p>
+          Venda:
+          <span class="font-semibold">{{ formatNumber(data.venta) }}</span>
+        </p>
+        <p>
+          Atualizado em:
+          <span class="font-semibold">{{
+            formatDateString(data.fechaActualizacion)
+          }}</span>
+        </p>
+      </div>
+    </a>
+    }
+  </div>
+  }
+</div>

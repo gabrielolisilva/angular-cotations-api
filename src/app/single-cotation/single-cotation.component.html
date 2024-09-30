@@ -1,0 +1,33 @@
+@if (isLoading) {
+<p>Carregando...</p>
+} @else {
+<div class="mt-10 flex justify-center items-center gap-4">
+  <a href="/" class="text-xs text-white bg-blue-500 rounded-lg px-4 py-1"
+    >Voltar</a
+  >
+  <h1 class="text-center text-2xl font-semibold">
+    Cotação: {{ cotationData.nombre || cotationName }}
+  </h1>
+</div>
+<p class="text-center text-sm text-gray-400">
+  {{ formatDateString(cotationData.fechaActualizacion) }}
+</p>
+<div
+  class="mt-10 flex flex-col justify-center items-center text-sm text-gray-600"
+>
+  <p>
+    Compra:
+    <span class="font-semibold">{{ formatNumber(cotationData.compra) }}</span>
+  </p>
+  <p>
+    Venda:
+    <span class="font-semibold">{{ formatNumber(cotationData.venta) }}</span>
+  </p>
+  <p>
+    Atualizado em:
+    <span class="font-semibold">{{
+      formatDateString(cotationData.fechaActualizacion)
+    }}</span>
+  </p>
+</div>
+}
